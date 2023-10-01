@@ -3,19 +3,22 @@ import Image from "next/image";
 import Avatar from "../../assets/Avatar.png";
 import { AiFillHeart } from "react-icons/ai";
 import { AiOutlineHeart } from "react-icons/ai";
+import Link from "next/link";
 
 const QuestionCard = ({
   question: { title, desc, img, authorId, reacted, count },
 }) => {
   return (
     <div className="w-[270px] h-[370px] rounded-2xl  shadow-lg max-sm:w-[100%] bg-white">
-      <div className="w-[250px] h-[250px] mt-[10px] mx-auto   overflow-hidden max-sm:w-[95%] max-sm:mx-auto">
-        <Image
-          src={img}
-          alt="Question Image"
-          className="rounded-2xl object-cover h-[250px]"
-        />
-      </div>
+      <Link href="/">
+        <div className="w-[250px] h-[250px] mt-[10px] mx-auto   overflow-hidden max-sm:w-[95%] max-sm:mx-auto">
+          <Image
+            src={img}
+            alt="Question Image"
+            className="rounded-2xl object-cover h-[250px]"
+          />
+        </div>
+      </Link>
       <div className="px-[10px] mt-3">
         <h1 className="text-[15px] font-normal text-[#0a7685] h-[40px]">
           {title}
