@@ -2,26 +2,68 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+@font-face {
+  font-family: "Poppins";
+  src: url("/path/to/poppins-regular.woff2") format("woff2");
+  font-style: normal;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+:root {
+  --background: #ecf8fc;
+  --darkblue: #0a7685;
+  --lightblue: #0fbbd3;
+  --gray: #b6b6b6;
+  --white: #fff;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-color: var(--background);
+  font-family: "Poppins", sans-serif;
+}
+
+.shadowBack {
+  box-shadow: 0 1rem 3rem hsl(0 10% 0% / 20%);
+}
+
+.buttonDarkBlue {
+  background-color: var(--background);
+  border-radius: 10px;
+  padding: 5px 20px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  color: var(--lightblue);
+}
+
+.buttonDarkBlue:hover {
+  background-color: var(--darkblue);
+  border-radius: 10px;
+  padding: 5px 20px;
+  align-items: center;
+  display: flex;
+  color: #ecf8fc;
+}
+
+.buttonOutlineDarkBlue {
+  background-color: var(--background);
+  border-radius: 100px;
+  border-width: 1px;
+  border-color: #0a778589;
+  padding: 5px 20px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  color: var(--lightblue);
+}
+
+.buttonOutlineDarkBlue:hover {
+  background-color: var(--darkblue);
+  border-radius: 100px;
+  border-width: 2px;
+  border-color: #ffffff;
+  padding: 5px 20px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  color: var(--background);
 }
