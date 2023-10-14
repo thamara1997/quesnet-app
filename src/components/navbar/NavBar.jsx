@@ -9,14 +9,16 @@ import { AiOutlineClose } from "react-icons/ai";
 import { CiImageOn } from "react-icons/ci";
 import { FaBell } from "react-icons/fa";
 import logoSmall from "../../assets/logosmall.png";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 const NavBar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const { data: session } = useSession();
 
   const handleShowDropDown = () => setShowDropdown((prev) => true);
   const handleHideDropDown = () => setShowDropdown((prev) => false);
 
-  const loggedIn = true;
+  const loggedIn = false;
   return (
     <div className="sticky flex justify-between p-[20px] px-10 items-center max-sm:w-full max-sm:px-5">
       <div className="left">
@@ -30,7 +32,7 @@ const NavBar = () => {
         </Link>
       </div>
       <div className="center">
-        {loggedIn ? (
+        {session?.user ? (
           <>
             <div className="flex items-center justify-between bg-white w-[500px] h-[35px] rounded-lg shadow-lg max-sm:w-[130px] max-sm:rounded-full max-sm:ml-3">
               <div className="bg-[#0a7685] rounded-lg  flex w-[30%] h-[35px] max-sm:w-full max-sm:rounded-full">
@@ -48,7 +50,7 @@ const NavBar = () => {
         )}
       </div>
       <div className="right">
-        {loggedIn ? (
+        {session?.user ? (
           <>
             <div className="flex items-center justify-center ">
               <div className="flex items-center mx-10">
@@ -83,7 +85,10 @@ const NavBar = () => {
                 </div>
 
                 <button
-                  onClick={handleHideDropDown}
+                  onClick={() => {
+                    signOut();
+                    handleHideDropDown();
+                  }}
                   className="w-full px-4 buttonDarkBlue text-[15px]"
                 >
                   Logout
@@ -94,7 +99,14 @@ const NavBar = () => {
         ) : (
           <>
             <div className="flex items-center justify-center gap-2">
-              <button className="text-lg buttonOutlineDarkBlue">Login</button>
+              <button
+                className="text-lg buttonOutlineDarkBlue"
+                onClick={() => {
+                  signIn();
+                }}
+              >
+                Login
+              </button>
               <Link
                 href="/register "
                 className="text-lg buttonOutlineDarkBlue "
