@@ -1,17 +1,19 @@
 "use client";
 
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Background from "../../assets/background.jpg";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { signIn } from "next-auth/react";
 
-const Login = () => {
+const Register = () => {
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
@@ -19,7 +21,12 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (password === "" || email === "") {
+    if (
+      password === "" ||
+      email === "" ||
+      firstname === "" ||
+      lastname === ""
+    ) {
       toast.error("Fill All Fields");
       return;
     }
@@ -30,21 +37,33 @@ const Login = () => {
     }
 
     try {
-      const res = await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
+      const res = await fetch("http://localhost:3000/api/register", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify({
+          firstname,
+          lastname,
+          email,
+          password,
+        }),
       });
+      console.log(await res.json());
 
-      if (res?.error == null) {
-        toast.success("Successfully logged In");
+      if (res.ok) {
+        toast.success("Successfully registered the user");
         setTimeout(() => {
-          router.push("/");
-        }, 1500);
+          signIn();
+        }, 2000);
+        return;
       } else {
-        toast.error("Error occurred while signing");
+        toast.error("Error occurred while Registering");
+        return;
       }
-    } catch (error) {}
+    } catch (error) {
+      toast.error("Error occurred");
+    }
   };
 
   // show password
@@ -69,21 +88,39 @@ const Login = () => {
                 className="object-cover w-full "
               />
             </div>
-
             <div className="absolute top-0 left-0 w-[50%] flex  justify-start h-full p-10 bg-[#0A7685] max-sm:relative max-sm:w-full">
-              <div className="mt-[50px]  flex-col w-[90%] max-sm:w-[95%]">
+              <div className="mt-[30px]  flex-col w-[90%] max-sm:w-[95%]">
                 <h1 className="flex items-center text-[25px] text-white font-semibold uppercase">
-                  Login
+                  Register
                 </h1>
 
                 <form className="flex-col mt-10 " onSubmit={handleSubmit}>
                   <div className="flex-row text-white  text-[13px] ">
+                    <div className="flex justify-between gap-3 my-3">
+                      <label className=" w-[50%]">
+                        <span className="m-1 font-light">First Name</span>
+                        <input
+                          type="text"
+                          className=" h-[2.5rem] w-full rounded-lg border-[1px] border-[#ffffff5d] bg-transparent px-4 mb-1"
+                          placeholder="John"
+                          onChange={(e) => setFirstname(e.target.value)}
+                        />
+                      </label>
+                      <label className=" w-[50%]">
+                        <span className="m-1 font-light">Last Name</span>
+                        <input
+                          type="text"
+                          className=" h-[2.5rem] w-full rounded-lg border-[1px] border-[#ffffff5d] bg-transparent px-4 mb-1"
+                          placeholder="Smith"
+                          onChange={(e) => setLastname(e.target.value)}
+                        />
+                      </label>
+                    </div>
                     <div className="my-3">
                       <label>
                         <span className="m-1 font-light">Email</span>
                         <input
                           type="email"
-                          // ref={register}
                           className=" h-[2.5rem] w-full rounded-lg border-[1px] border-[#ffffff5d] bg-transparent px-4 mb-1"
                           placeholder="example@gmail.com"
                           onChange={(e) => setEmail(e.target.value)}
@@ -121,8 +158,9 @@ const Login = () => {
                   <button
                     type="submit"
                     className="w-full mt-8 bg-[#fff] px-5 py-2 rounded-lg text-[#0A7685] font-normal text-[15px] hover:bg-[#45b1bf] hover:text-[#fff] "
+                    onClick={() => signIn()}
                   >
-                    Login
+                    Register Now
                   </button>
 
                   <p className="flex justify-center my-4 text-[#fff]">or</p>
@@ -136,11 +174,11 @@ const Login = () => {
 
                   <div className="flex my-4">
                     <h1 className="font-light text-white text-[10px]">
-                      Not a member yet?
+                      Have an Account?
                     </h1>
-                    <Link href={"/register"}>
+                    <Link href={"/login"}>
                       <h1 className="font-light text-cyan-300 ml-3 text-[10px]">
-                        Create Account
+                        Log in
                       </h1>
                     </Link>
                   </div>
@@ -155,4 +193,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

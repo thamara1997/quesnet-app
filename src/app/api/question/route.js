@@ -1,5 +1,5 @@
 import db from "@/lib/db";
-import { verifyToken } from "@/lib/jwt";
+import { verifyJwtToken } from "@/lib/jwt";
 import Question from "@/models/Question";
 
 export async function GET(req) {
@@ -19,7 +19,7 @@ export async function POST(req) {
   const accessToken = req.headers.get("authorization");
   const token = accessToken.split(" ")[1];
 
-  const decodedToken = verifyToken(token);
+  const decodedToken = verifyJwtToken(token);
 
   if (!accessToken || !decodedToken) {
     return new Response(

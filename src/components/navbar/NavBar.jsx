@@ -34,16 +34,18 @@ const NavBar = () => {
       <div className="center">
         {session?.user ? (
           <>
-            <div className="flex items-center justify-between bg-white w-[500px] h-[35px] rounded-lg shadow-lg max-sm:w-[130px] max-sm:rounded-full max-sm:ml-3">
-              <div className="bg-[#0a7685] rounded-lg  flex w-[30%] h-[35px] max-sm:w-full max-sm:rounded-full">
-                <h1 className="flex items-center mx-auto text-white text-[13px]">
-                  Create Ques
-                </h1>
+            <Link href={"/create-question"}>
+              <div className="flex items-center justify-between bg-white w-[500px] h-[35px] rounded-lg shadow-lg max-sm:w-[130px] max-sm:rounded-full max-sm:ml-3">
+                <div className="bg-[#0a7685] rounded-lg  flex w-[30%] h-[35px] max-sm:w-full max-sm:rounded-full">
+                  <h1 className="flex items-center mx-auto text-white text-[13px]">
+                    Create Ques
+                  </h1>
+                </div>
+                <div className="flex items-center p-2 max-sm:hidden">
+                  <CiImageOn size={20} />
+                </div>
               </div>
-              <div className="flex items-center p-2 max-sm:hidden">
-                <CiImageOn size={20} />
-              </div>
-            </div>
+            </Link>
           </>
         ) : (
           <></>
