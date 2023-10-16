@@ -24,7 +24,7 @@ export async function PUT(req, ctx) {
 
     if (question.likes.includes(decodedToken._id)) {
       question.likes = question.likes.filter(
-        (id) => id.toString !== decodedToken._id.toString()
+        (id) => id.toString() !== decodedToken._id.toString()
       );
     } else {
       question.likes.push(decodedToken._id);
