@@ -2,12 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: "Poppins";
-  src: url("/path/to/poppins-regular.woff2") format("woff2");
-  font-style: normal;
-}
-
 :root {
   --background: #ecf8fc;
   --darkblue: #0a7685;
@@ -18,7 +12,6 @@
 
 body {
   background-color: var(--background);
-  font-family: "Poppins", sans-serif;
 }
 
 .shadowBack {

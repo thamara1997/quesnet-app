@@ -77,10 +77,14 @@ const CreateQuestion = () => {
 
       if (!res.ok) {
         throw new Error("Error Occurred");
-      }
+      } else {
+        const ques = await res.json();
 
-      const ques = await res.json();
-      router.push(`question/${ques?._id}`);
+        toast.success("Post Published successfully");
+        setTimeout(() => {
+          router.push(`question/${ques?._id}`);
+        }, 1500);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -114,96 +118,155 @@ const CreateQuestion = () => {
 
   return (
     <div>
-      <div>
-        <form action="" onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="image">
-              Upload Image <AiOutlineFileImage />
-            </label>
-            <input
-              id="image"
-              type="file"
-              className="hidden"
-              onChange={(e) => setPhoto(e.target.files[0])}
-            />
-          </div>
-          <select
-            value={quesType}
-            onChange={(e) => setQuesType(e.target.value)}
-          >
-            <option value="Multiple Choices">Multiple Choices</option>
-            <option value="Satisfactory">Satisfactory</option>
-          </select>
-
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            <option value="Computer Science">Computer Science</option>
-            <option value="Physics">Physics</option>
-            <option value="Chemistry">Chemistry</option>
-            <option value="Statistics">Statistics</option>
-            <option value="Mathematics">Mathematics</option>
-          </select>
-          <input
-            type="text"
-            placeholder="Enter Your Question"
-            onChange={(e) => setQuestion(e.target.value)}
-          />
-          {quesType === "Multiple Choices" ? (
-            <>
-              <div>
-                <input
-                  type="text"
-                  placeholder="Answer 1"
-                  onChange={(e) => setAnswer1(e.target.value)}
-                />
-                <input
-                  type="text"
-                  placeholder="Answer 2"
-                  onChange={(e) => setAnswer2(e.target.value)}
-                />
-                <input
-                  type="text"
-                  placeholder="Answer 3"
-                  onChange={(e) => setAnswer3(e.target.value)}
-                />
-                <input
-                  type="text"
-                  placeholder="Answer 4"
-                  onChange={(e) => setAnswer4(e.target.value)}
-                />
+      <div className="w-[50%] flex-col  mx-auto max-sm:w-[98%]">
+        <div className="w-full p-4 rounded-2xl max-sm:p-3">
+          <form action="" onSubmit={handleSubmit}>
+            <div className="w-[100%] h-[300px] flex items-center justify-center p-4 border-dotted border-gray-500 border-[1px] rounded-2xl mb-5">
+              <div className="">
+                <label
+                  htmlFor="image"
+                  style={{
+                    cursor: "pointer",
+                    display: "block",
+                    width: "100%",
+                    height: "100%",
+                  }}
+                >
+                  <div className="items-center justify-center w-full text-center">
+                    <div>
+                      <AiOutlineFileImage size={40} />
+                    </div>
+                  </div>
+                  <input
+                    id="image"
+                    type="file"
+                    className="hidden"
+                    onChange={(e) => setPhoto(e.target.files[0])}
+                  />
+                </label>
               </div>
-            </>
-          ) : (
-            <>
-              <div>
-                <input
-                  type="text"
-                  value={answer1}
-                  onChange={(e) => setAnswer1(e.target.value)}
-                />
-                <input
-                  type="text"
-                  value={answer2}
-                  onChange={(e) => setAnswer2(e.target.value)}
-                />
-                <input
-                  type="text"
-                  value={answer3}
-                  onChange={(e) => setAnswer3(e.target.value)}
-                />
-                <input
-                  type="text"
-                  value={answer4}
-                  onChange={(e) => setAnswer4(e.target.value)}
-                />
+            </div>
+            <div className="flex justify-between w-full gap-4">
+              <div className="w-[50%]">
+                <h1 className="text-[15px] text-[#0a7685] font-semibold my-2">
+                  Question Type
+                </h1>{" "}
+                <select
+                  value={quesType}
+                  onChange={(e) => {
+                    setQuesType(e.target.value);
+                  }}
+                  className="p-3 bg-white rounded-full shadow-xl text-[#0fbbd3] w-full text-center"
+                >
+                  <option value="Multiple Choices">Multiple Choices</option>
+                  <option value="Satisfactory">Satisfactory</option>
+                </select>
               </div>
-            </>
-          )}
 
-          <button>Publish Question</button>
-        </form>
+              <div className="w-[50%]">
+                <h1 className="text-[15px] text-[#0a7685] font-semibold my-2">
+                  Category
+                </h1>{" "}
+                <select
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  className="p-3 bg-white rounded-full shadow-xl text-[#0fbbd3] w-full text-center"
+                >
+                  <option value="Computer Science">Computer Science</option>
+                  <option value="Physics">Physics</option>
+                  <option value="Chemistry">Chemistry</option>
+                  <option value="Statistics">Statistics</option>
+                  <option value="Mathematics">Mathematics</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <h1 className="text-[15px] text-[#0a7685] font-semibold my-2">
+                Question
+              </h1>{" "}
+              <input
+                type="text"
+                placeholder="Enter Your Question"
+                onChange={(e) => setQuestion(e.target.value)}
+                className="w-full p-3 bg-white shadow-xl rounded-2xl "
+              />
+            </div>
+            {quesType === "Multiple Choices" ? (
+              <>
+                <div>
+                  <h1 className="text-[15px] text-[#0a7685] font-semibold my-2">
+                    Answers
+                  </h1>
+                  <div className="grid w-full grid-cols-2 gap-4 max-sm:grid-cols-1">
+                    <input
+                      type="text"
+                      placeholder="Answer 1"
+                      value={""}
+                      onChange={(e) => setAnswer1(e.target.value)}
+                      className="p-3 rounded-full shadow-xl"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Answer 2"
+                      value={""}
+                      onChange={(e) => setAnswer2(e.target.value)}
+                      className="p-3 rounded-full shadow-xl"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Answer 3"
+                      value={""}
+                      onChange={(e) => setAnswer3(e.target.value)}
+                      className="p-3 rounded-full shadow-xl"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Answer 4"
+                      value={""}
+                      onChange={(e) => setAnswer4(e.target.value)}
+                      className="p-3 rounded-full shadow-xl"
+                    />
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div>
+                  <h1 className="text-[15px] text-[#0a7685] font-semibold my-2">
+                    Answers
+                  </h1>
+                  <div className="grid w-full grid-cols-2 gap-4 max-sm:grid-cols-1">
+                    <input
+                      type="text"
+                      value="Don't Know"
+                      className="p-3 rounded-full shadow-xl"
+                    />
+                    <input
+                      type="text"
+                      value="I don't Know"
+                      className="p-3 rounded-full shadow-xl"
+                    />
+                    <input
+                      type="text"
+                      value="I agree"
+                      className="p-3 rounded-full shadow-xl"
+                    />
+                    <input
+                      type="text"
+                      value="Totally agree"
+                      className="p-3 rounded-full shadow-xl"
+                    />
+                  </div>
+                </div>
+              </>
+            )}
+
+            <button className="bg-[#0a7685] w-full rounded-full p-2 my-5 text-[white]">
+              Publish Question
+            </button>
+          </form>
+        </div>
       </div>
       <ToastContainer />
     </div>

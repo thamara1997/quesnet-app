@@ -1,4 +1,5 @@
 import QuestionCard from "@/components/questionCard/QuestionCard";
+
 // import { questions } from "@/lib/data";
 
 export async function fetchQuestion() {
@@ -18,7 +19,7 @@ export default async function Home() {
             <QuestionCard key={question._id} question={question} />
           ))
         ) : (
-          <h3 className={classes.noBlogs}>No Questions are currently in the</h3>
+          <h3>No Questions are currently in the</h3>
         )}
       </div>
     </div>

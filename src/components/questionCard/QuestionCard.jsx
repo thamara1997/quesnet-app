@@ -33,7 +33,7 @@ const QuestionCard = ({
         }
       );
 
-      console.log(res);
+      //console.log(res);
       if (res.ok) {
         if (isLiked) {
           setIsLiked((prev) => !prev);
@@ -48,20 +48,18 @@ const QuestionCard = ({
     }
   };
   return (
-    <div className="w-[270px] h-[370px] rounded-2xl  shadow-lg max-sm:w-[100%] bg-white">
-      <Link href="/">
-        <div className="w-[250px] h-[250px] mt-[10px] mx-auto   overflow-hidden max-sm:w-[95%] max-sm:mx-auto">
-          <Link href={`/question/${_id}`}>
-            <Image
-              src={imageUrl}
-              alt="Question Image"
-              className="rounded-2xl object-cover h-[250px]"
-              width={400}
-              height={30}
-            />
-          </Link>
-        </div>
-      </Link>
+    <div className="w-[270px] h-[370px] rounded-2xl   shadow-lg max-sm:w-[100%] bg-white hover:scale-[101%] hover:duration-500">
+      <div className="w-[250px] h-[250px] mt-[10px] mx-auto   overflow-hidden max-sm:w-[95%] max-sm:mx-auto">
+        <Link href={`/question/${_id}`}>
+          <Image
+            src={imageUrl}
+            alt="Question Image"
+            className="rounded-2xl object-cover h-[250px]"
+            width={400}
+            height={30}
+          />
+        </Link>
+      </div>
       <div className="px-[10px] mt-3">
         <h1 className="text-[15px] font-normal text-[#0a7685] h-[40px]">
           {question}
@@ -84,15 +82,21 @@ const QuestionCard = ({
           </div>
           <div className="flex items-center mx-2 text-[#0a7685]">
             <h1 className="flex mx-2 text-[10px]">{quesLikes}</h1>
-            {isLiked === true ? (
-              <>
-                <AiFillHeart size={20} onClick={handleLike} />
-              </>
-            ) : (
-              <>
-                <AiOutlineHeart size={20} onClick={handleLike} />
-              </>
-            )}
+            <div className="">
+              {isLiked === true ? (
+                <AiFillHeart
+                  onClick={handleLike}
+                  size={20}
+                  className="cursor-pointer"
+                />
+              ) : (
+                <AiOutlineHeart
+                  onClick={handleLike}
+                  size={20}
+                  className="cursor-pointer"
+                />
+              )}
+            </div>
           </div>
         </div>
       </div>

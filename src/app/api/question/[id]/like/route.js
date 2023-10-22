@@ -10,30 +10,32 @@ export async function PUT(req, ctx) {
   const accessToken = req.headers.get("authorization");
   const token = accessToken.split(" ")[1];
 
+  //console.log(token);
+
   const decodedToken = verifyJwtToken(token);
 
   if (!accessToken || !decodedToken) {
     return new Response(
-      JSON.stringify({ error: "unauthorized (wrong or expired token" }),
+      JSON.stringify({ error: "unauthorized (wrong or expired token)" }),
       { status: 403 }
     );
   }
 
   try {
-    const question = await Question.findById(id);
+    const ques = await Question.findById(id);
 
-    if (question.likes.includes(decodedToken._id)) {
-      question.likes = question.likes.filter(
+    if (ques.likes.includes(decodedToken._id)) {
+      ques.likes = ques.likes.filter(
         (id) => id.toString() !== decodedToken._id.toString()
       );
     } else {
-      question.likes.push(decodedToken._id);
+      ques.likes.push(decodedToken._id);
     }
 
-    await Question.save();
+    await ques.save();
 
     return new Response(
-      JSON.stringify({ msg: "Successfully interacted with the Question" }),
+      JSON.stringify({ msg: "Successfully interacted with the blog" }),
       { status: 200 }
     );
   } catch (error) {
