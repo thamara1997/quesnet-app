@@ -38,7 +38,7 @@ const handler = NextAuth({
         } else {
           const { password, ...currentUser } = user._doc;
 
-          const accessToken = signJwtToken(currentUser, { expiresIn: "6d" });
+          const accessToken = signJwtToken(currentUser, { expiresIn: "60d" });
 
           return {
             ...currentUser,

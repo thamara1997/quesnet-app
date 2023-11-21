@@ -160,7 +160,7 @@ const QuestionPage = (ctx) => {
               {questionDetails?.authorId?._id.toString() ===
               session?.user?._id.toString() ? (
                 <div className="flex items-center gap-2">
-                  <Link href={`question/edit/${ctx.params.id}`}>
+                  <Link href={`edit/${ctx.params.id}`}>
                     <HiOutlinePencilAlt size={25} className="text-gray-500" />
                   </Link>
                   <button
