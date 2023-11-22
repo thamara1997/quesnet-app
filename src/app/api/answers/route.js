@@ -2,7 +2,7 @@ import db from "@/lib/db";
 import { verifyJwtToken } from "@/lib/jwt";
 import Answer from "@/models/Answer";
 
-export async function PUT(req) {
+export async function POST(req) {
   await db.connect();
 
   const accessToken = req.headers.get("authorization");

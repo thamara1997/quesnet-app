@@ -14,6 +14,7 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { HiOutlinePencilAlt } from "react-icons/hi";
 
 import Avatar from "../../../assets/Avatar.png";
+import AnswerCard from "@/components/Answer/AnswerCard";
 
 const QuestionPage = (ctx) => {
   const [questionDetails, setQuestionData] = useState("");
@@ -22,7 +23,26 @@ const QuestionPage = (ctx) => {
   const { data: session } = useSession();
   const router = useRouter();
 
-  //console.log(questionDetails);
+  const [answers, setAnswers] = useState([]);
+
+  const [selectedAnswer, setSelectedAnswer] = useState("");
+
+  // useEffect(() => {
+  //   console.log("Selected Answer:", selectedAnswer);
+  // }, [selectedAnswer]);
+
+  useEffect(() => {
+    async function fetchAnswers() {
+      const res = await fetch(
+        `http://localhost:3000/api/answers/${ctx.params.id}`,
+        { cache: "no-store" }
+      );
+      const answers = await res.json();
+
+      setAnswers(answers);
+    }
+    fetchAnswers();
+  }, []);
 
   useEffect(() => {
     async function fetchQuestion() {
@@ -95,9 +115,39 @@ const QuestionPage = (ctx) => {
     }
   };
 
+  const handleButtonClick = async () => {
+    // console.log(selectedAnswer);
+    try {
+      const body = {
+        questionId: ctx.params.id,
+        authorId: session?.user?._id,
+        answer: selectedAnswer,
+      };
+
+      console.log(body);
+
+      const res = await fetch(`http://localhost:3000/api/answers`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session?.user?.accessToken}`,
+        },
+        method: "POST",
+        body: JSON.stringify(body),
+      });
+
+      const newAnswer = await res.json();
+
+      setAnswers((prev) => {
+        return [newAnswer, ...prev];
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
-      <div className="w-[50%] flex-col  mx-auto max-sm:w-[98%]">
+      <div className="w-[50%] flex-col  mx-auto max-sm:w-[98%] mb-10">
         <div className="w-full bg-[white] rounded-2xl  p-4 shadow-lg max-sm:p-3">
           <div className="flex justify-between w-full">
             {" "}
@@ -176,19 +226,64 @@ const QuestionPage = (ctx) => {
             </div>
           </div>
         </div>
+        {/* Answer Input */}
         <div className="flex justify-between mt-10 max-sm:w-full max-sm:block">
-          <h1 className="flex items-center justify-center rounded-full w-[150px] h-[50px] bg-[white] text-[#0fbbd3] shadow-xl text-[15px] font-bold hover:bg-[#0fbbd3] hover:text-[white] max-sm:w-full max-sm:my-3">
+          <button
+            className="text-center rounded-full w-[150px] h-[50px] bg-[white] text-[#0fbbd3] shadow-xl text-[15px] font-bold hover:bg-[#0fbbd3] hover:text-[white] max-sm:w-full max-sm:my-3"
+            onClick={() =>
+              handleButtonClick(setSelectedAnswer(questionDetails?.answer1))
+            }
+          >
             {questionDetails?.answer1}
-          </h1>
-          <h1 className="flex items-center justify-center rounded-full w-[150px] h-[50px] bg-[white] text-[#0fbbd3] shadow-xl text-[15px] font-bold hover:bg-[#0fbbd3] hover:text-[white] max-sm:w-full max-sm:my-3">
+          </button>
+
+          <button
+            className="text-center rounded-full w-[150px] h-[50px] bg-[white] text-[#0fbbd3] shadow-xl text-[15px] font-bold hover:bg-[#0fbbd3] hover:text-[white] max-sm:w-full max-sm:my-3"
+            onClick={() =>
+              handleButtonClick(setSelectedAnswer(questionDetails?.answer2))
+            }
+          >
             {questionDetails?.answer2}
-          </h1>
-          <h1 className="flex items-center justify-center rounded-full w-[150px] h-[50px] bg-[white] text-[#0fbbd3] shadow-xl text-[15px] font-bold hover:bg-[#0fbbd3] hover:text-[white] max-sm:w-full max-sm:my-3">
+          </button>
+
+          <button
+            className="text-center rounded-full w-[150px] h-[50px] bg-[white] text-[#0fbbd3] shadow-xl text-[15px] font-bold hover:bg-[#0fbbd3] hover:text-[white] max-sm:w-full max-sm:my-3"
+            onClick={() =>
+              handleButtonClick(setSelectedAnswer(questionDetails?.answer3))
+            }
+          >
             {questionDetails?.answer3}
-          </h1>
-          <h1 className="flex items-center justify-center rounded-full w-[150px] h-[50px] bg-[white] text-[#0fbbd3] shadow-xl text-[15px] font-bold hover:bg-[#0fbbd3] hover:text-[white] max-sm:w-full max-sm:my-3">
+          </button>
+
+          <button
+            className="text-center rounded-full w-[150px] h-[50px] bg-[white] text-[#0fbbd3] shadow-xl text-[15px] font-bold hover:bg-[#0fbbd3] hover:text-[white] max-sm:w-full max-sm:my-3"
+            onClick={() =>
+              handleButtonClick(setSelectedAnswer(questionDetails?.answer4))
+            }
+          >
             {questionDetails?.answer4}
-          </h1>
+          </button>
+        </div>
+      </div>
+      {/* Answer Pool */}
+      <div className="mx-auto w-[50%] bg-[white] rounded-2xl mt-10 p-4 shadow-lg max-sm:p-3">
+        <h1 className="uppercase text-[15px] font-semibold text-[#0a7685]">
+          Answer Pool
+        </h1>
+        <div className="flex">
+          {answers?.length > 0 ? (
+            answers?.map((answer) => (
+              <AnswerCard
+                key={answer?.id}
+                answer={answer}
+                setAnswers={setAnswers}
+              />
+            ))
+          ) : (
+            <h1 className="text-[15px] text-center">
+              No Answers Be the first one
+            </h1>
+          )}
         </div>
       </div>
       <ToastContainer />

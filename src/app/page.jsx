@@ -19,7 +19,9 @@ export default async function Home() {
             <QuestionCard key={question._id} question={question} />
           ))
         ) : (
-          <h3>No Questions are currently in the</h3>
+          <h3 className="items-center w-full col-span-4 mt-10 text-center">
+            No Questions are currently Here
+          </h3>
         )}
       </div>
     </div>
