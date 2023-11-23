@@ -7,6 +7,11 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AiOutlineFileImage } from "react-icons/ai";
 
+import { BsEmojiSmile } from "react-icons/bs";
+import { BsEmojiNeutral } from "react-icons/bs";
+import { BsEmojiFrown } from "react-icons/bs";
+import { BsEmojiHeartEyes } from "react-icons/bs";
+
 const CreateQuestion = () => {
   const CLOUD_NAME = "deyb6dxpy";
   const UPLOAD_PRESET = "quesnet-project";
@@ -16,10 +21,10 @@ const CreateQuestion = () => {
   const [photo, setPhoto] = useState("");
   const [category, setCategory] = useState("Computer Science");
   const [quesType, setQuesType] = useState("Multiple Choices");
-  const [answer1, setAnswer1] = useState("Don't agree");
-  const [answer2, setAnswer2] = useState("I don't Know");
-  const [answer3, setAnswer3] = useState("I agree");
-  const [answer4, setAnswer4] = useState("Totally agree");
+  const [answer1, setAnswer1] = useState("Unsatisfied");
+  const [answer2, setAnswer2] = useState("Neutral");
+  const [answer3, setAnswer3] = useState("Satisfied");
+  const [answer4, setAnswer4] = useState("Very Satisfied");
 
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -235,26 +240,53 @@ const CreateQuestion = () => {
                     Answers
                   </h1>
                   <div className="grid w-full grid-cols-2 gap-4 max-sm:grid-cols-1">
-                    <input
-                      type="text"
-                      value="Don't agree"
-                      className="p-3 rounded-full shadow-xl"
-                    />
-                    <input
-                      type="text"
-                      value="I don't Know"
-                      className="p-3 rounded-full shadow-xl"
-                    />
-                    <input
-                      type="text"
-                      value="I agree"
-                      className="p-3 rounded-full shadow-xl"
-                    />
-                    <input
-                      type="text"
-                      value="Totally agree"
-                      className="p-3 rounded-full shadow-xl"
-                    />
+                    <div className="relative w-full">
+                      <input
+                        type="text"
+                        value="Unsatisfied"
+                        className="w-full p-3 rounded-full shadow-xl"
+                      />
+                      <BsEmojiFrown
+                        size={20}
+                        className="text-[#0a7685] absolute top-4 right-4 flex items-center pointer-events-none"
+                      />
+                    </div>
+
+                    <div className="relative w-full">
+                      <input
+                        type="text"
+                        value="Neutral"
+                        className="w-full p-3 rounded-full shadow-xl"
+                      />
+                      <BsEmojiSmile
+                        size={20}
+                        className="text-[#0a7685] absolute top-4 right-4 flex items-center pointer-events-none"
+                      />
+                    </div>
+
+                    <div className="relative w-full">
+                      <input
+                        type="text"
+                        value="Satisfied"
+                        className="w-full p-3 rounded-full shadow-xl"
+                      />
+                      <BsEmojiNeutral
+                        size={20}
+                        className="text-[#0a7685] absolute top-4 right-4 flex items-center pointer-events-none"
+                      />
+                    </div>
+
+                    <div className="relative w-full">
+                      <input
+                        type="text"
+                        value="Very Satisfied"
+                        className="w-full p-3 rounded-full shadow-xl"
+                      />
+                      <BsEmojiHeartEyes
+                        size={20}
+                        className="text-[#0a7685] absolute top-4 right-4 flex items-center pointer-events-none"
+                      />
+                    </div>
                   </div>
                 </div>
               </>

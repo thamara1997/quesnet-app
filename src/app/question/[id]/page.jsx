@@ -17,6 +17,9 @@ import Avatar from "../../../assets/Avatar.png";
 import AnswerCard from "@/components/Answer/AnswerCard";
 
 import { BsEmojiSmile } from "react-icons/bs";
+import { BsEmojiNeutral } from "react-icons/bs";
+import { BsEmojiFrown } from "react-icons/bs";
+import { BsEmojiHeartEyes } from "react-icons/bs";
 
 const QuestionPage = (ctx) => {
   const [questionDetails, setQuestionData] = useState("");
@@ -193,7 +196,7 @@ const QuestionPage = (ctx) => {
               </div>
             </div>
           </div>
-          <div className="w-full my-5 h-[400px] mx-auto rounded-2xl overflow-hidden max-sm:w-[99%] max-sm:mx-auto flex items-center justify-center">
+          <div className="w-full my-5 h-[400px] mx-auto rounded-2xl overflow-hidden max-sm:w-[99%] max-sm:mx-auto flex items-center justify-center max-sm:h-[200px]">
             <Image
               alt=""
               src={questionDetails?.imageUrl}
@@ -269,30 +272,39 @@ const QuestionPage = (ctx) => {
                 onClick={() => handleButtonClick(questionDetails?.answer1)}
               >
                 {questionDetails?.answer1}
-                <span className="mx-2">
+                <span className="ml-2">
+                  <BsEmojiFrown size={20} />
+                </span>
+              </button>
+
+              <button
+                className="flex justify-center items-center  text-center rounded-full w-[150px] h-[50px] bg-[white] text-[#0fbbd3] shadow-xl text-[15px] font-bold hover:bg-[#0fbbd3] hover:text-[white] max-sm:w-full max-sm:my-3"
+                onClick={() => handleButtonClick(questionDetails?.answer2)}
+              >
+                {questionDetails?.answer2}
+                <span className="ml-2">
+                  <BsEmojiNeutral size={20} />
+                </span>
+              </button>
+
+              <button
+                className=" flex justify-center items-center  text-center rounded-full w-[150px] h-[50px] bg-[white] text-[#0fbbd3] shadow-xl text-[15px] font-bold hover:bg-[#0fbbd3] hover:text-[white] max-sm:w-full max-sm:my-3"
+                onClick={() => handleButtonClick(questionDetails?.answer3)}
+              >
+                {questionDetails?.answer3}
+                <span className="ml-2">
                   <BsEmojiSmile size={20} />
                 </span>
               </button>
 
               <button
-                className="text-center rounded-full w-[150px] h-[50px] bg-[white] text-[#0fbbd3] shadow-xl text-[15px] font-bold hover:bg-[#0fbbd3] hover:text-[white] max-sm:w-full max-sm:my-3"
-                onClick={() => handleButtonClick(questionDetails?.answer2)}
-              >
-                {questionDetails?.answer2}
-              </button>
-
-              <button
-                className="text-center rounded-full w-[150px] h-[50px] bg-[white] text-[#0fbbd3] shadow-xl text-[15px] font-bold hover:bg-[#0fbbd3] hover:text-[white] max-sm:w-full max-sm:my-3"
-                onClick={() => handleButtonClick(questionDetails?.answer3)}
-              >
-                {questionDetails?.answer3}
-              </button>
-
-              <button
-                className="text-center rounded-full w-[150px] h-[50px] bg-[white] text-[#0fbbd3] shadow-xl text-[15px] font-bold hover:bg-[#0fbbd3] hover:text-[white] max-sm:w-full max-sm:my-3"
+                className="flex justify-center items-center  text-center rounded-full w-[150px] h-[50px] bg-[white] text-[#0fbbd3] shadow-xl text-[15px] font-bold hover:bg-[#0fbbd3] hover:text-[white] max-sm:w-full max-sm:my-3"
                 onClick={() => handleButtonClick(questionDetails?.answer4)}
               >
                 {questionDetails?.answer4}
+                <span className="ml-2">
+                  <BsEmojiHeartEyes size={20} />
+                </span>
               </button>
             </>
           )}
