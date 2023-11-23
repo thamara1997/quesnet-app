@@ -2,7 +2,7 @@
 
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AiOutlineFileImage } from "react-icons/ai";
@@ -16,7 +16,7 @@ const CreateQuestion = () => {
   const [photo, setPhoto] = useState("");
   const [category, setCategory] = useState("Computer Science");
   const [quesType, setQuesType] = useState("Multiple Choices");
-  const [answer1, setAnswer1] = useState("Don't Agree");
+  const [answer1, setAnswer1] = useState("Don't agree");
   const [answer2, setAnswer2] = useState("I don't Know");
   const [answer3, setAnswer3] = useState("I agree");
   const [answer4, setAnswer4] = useState("Totally agree");
@@ -36,6 +36,8 @@ const CreateQuestion = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setQuesType(quesType);
 
     if (
       !photo ||
@@ -202,28 +204,24 @@ const CreateQuestion = () => {
                     <input
                       type="text"
                       placeholder="Answer 1"
-                      value={""}
                       onChange={(e) => setAnswer1(e.target.value)}
                       className="p-3 rounded-full shadow-xl"
                     />
                     <input
                       type="text"
                       placeholder="Answer 2"
-                      value={""}
                       onChange={(e) => setAnswer2(e.target.value)}
                       className="p-3 rounded-full shadow-xl"
                     />
                     <input
                       type="text"
                       placeholder="Answer 3"
-                      value={""}
                       onChange={(e) => setAnswer3(e.target.value)}
                       className="p-3 rounded-full shadow-xl"
                     />
                     <input
                       type="text"
                       placeholder="Answer 4"
-                      value={""}
                       onChange={(e) => setAnswer4(e.target.value)}
                       className="p-3 rounded-full shadow-xl"
                     />
@@ -239,7 +237,7 @@ const CreateQuestion = () => {
                   <div className="grid w-full grid-cols-2 gap-4 max-sm:grid-cols-1">
                     <input
                       type="text"
-                      value="Don't Know"
+                      value="Don't agree"
                       className="p-3 rounded-full shadow-xl"
                     />
                     <input

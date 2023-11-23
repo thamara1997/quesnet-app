@@ -8,7 +8,7 @@ export async function GET(req, ctx) {
   const id = ctx.params.id;
 
   try {
-    const Answers = await Answer.find({ blogId: id }).populate("authorId");
+    const Answers = await Answer.find({ questionId: id }).populate("authorId");
 
     return new Response(JSON.stringify(Answers), { status: 200 });
   } catch (error) {
@@ -17,6 +17,7 @@ export async function GET(req, ctx) {
 }
 
 export async function DELETE(req, ctx) {
+  const { id } = ctx.params;
   await db.connect();
 
   const accessToken = req.headers.get("authorization");

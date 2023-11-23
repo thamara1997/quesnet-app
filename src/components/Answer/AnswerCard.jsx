@@ -4,15 +4,17 @@ import Avatar from "../../assets/Avatar.png";
 import Image from "next/image";
 import { format } from "timeago.js";
 
-import { AiOutlineDelete } from "react-icons/ai";
+import { MdDeleteOutline } from "react-icons/md";
 
-const AnswerCard = (answer, setAnswers) => {
+const AnswerCard = ({ answer, setAnswers }) => {
   const { data: session } = useSession();
   const token = session?.user?.accessToken;
 
+  //console.log(answer?.answer);
+
   const handleDeleteAnswer = async () => {
     try {
-      await fetch(`https://localhost:3000/api/answers/${answer?._id}`, {
+      await fetch(`http://localhost:3000/api/answer/${answer?._id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -40,17 +42,24 @@ const AnswerCard = (answer, setAnswers) => {
           />
           <div className="flex flex-col justify-start mx-2">
             <h1 className="text-[15px] font-medium">
-              {answer?.authorId?.username}
+              {answer?.authorId?.firstname}
             </h1>
             <span className="text-[10px] text-gray-400">
               {format(answer?.createdAt)}
             </span>
           </div>
         </div>
-        <div className="flex">
-          <div className="">
+        <div className="flex items-center">
+          <h1 className="p-1 px-3 mx-4 bg-[#0fbbd3] rounded-full text-[15px] font-semibold text-white">
+            {answer?.answer}
+          </h1>
+          <div className="text-black ">
             {session?.user?._id === answer?.authorId?._id && (
-              <AiOutlineDelete onClick={handleDeleteAnswer} />
+              <MdDeleteOutline
+                onClick={handleDeleteAnswer}
+                size={25}
+                className="text-black"
+              />
             )}
           </div>
         </div>

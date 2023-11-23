@@ -20,11 +20,14 @@ export async function POST(req) {
   try {
     const body = await req.json();
 
-    let newAnswer = new Answer.create(body);
+    let newAnswer = await Answer.create(body);
     newAnswer = await newAnswer.populate("authorId");
 
     return new Response(JSON.stringify(newAnswer), { status: 201 });
   } catch (error) {
-    return new Response(JSON.stringify(null), { status: 500 });
+    console.error(error);
+    return new Response(JSON.stringify({ error: "Internal Server Error" }), {
+      status: 500,
+    });
   }
 }
