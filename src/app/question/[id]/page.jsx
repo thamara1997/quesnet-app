@@ -151,6 +151,52 @@ const QuestionPage = (ctx) => {
     }
   };
 
+  // Function to calculate the count of each answer type
+  const getAnswerCounts = () => {
+    const answerCounts = {};
+    const totalAnswers = answers.length;
+
+    answers.forEach((answer) => {
+      const answerType = answer.answer;
+
+      if (answerType in answerCounts) {
+        answerCounts[answerType]++;
+      } else {
+        answerCounts[answerType] = 1;
+      }
+    });
+
+    // Calculate percentages
+    const answerPercentages = {};
+    Object.entries(answerCounts).forEach(([answerType, count]) => {
+      answerPercentages[answerType] = (count / totalAnswers) * 100;
+    });
+
+    return answerPercentages;
+  };
+
+  const getAnswerColor = (answerType) => {
+    switch (answerType) {
+      case `${questionDetails?.answer1}`:
+        return "bg-green-400";
+      case `${questionDetails?.answer2}`:
+        return "bg-violet-500";
+      case `${questionDetails?.answer3}`:
+        return "bg-yellow-300";
+
+      case `${questionDetails?.answer4}`:
+        return "bg-cyan-400";
+      // Add more cases for other answer types
+      default:
+        return "bg-gray-500";
+    }
+  };
+
+  // Get answer percentages
+  const answerPercentages = getAnswerCounts();
+
+  // console.log(answerPercentages);
+
   return (
     <div className="">
       <div className="w-[50%] flex-col  mx-auto max-sm:w-[98%] mb-10">
@@ -325,11 +371,37 @@ const QuestionPage = (ctx) => {
               />
             ))
           ) : (
-            <h1 className="text-[15px] text-center">
+            <h1 className="text-[15px] text-center my-10">
               No Answers Be the first one
             </h1>
           )}
         </div>
+      </div>
+
+      <div className="mx-auto w-[50%] bg-[white] rounded-2xl mt-10 p-4 shadow-lg max-sm:p-3 max-sm:w-full mb-10">
+        <h1 className="uppercase text-[15px] font-semibold text-[#0a7685] mb-5">
+          Answer Distribution
+        </h1>
+        <ul>
+          {Object.entries(answerPercentages).map(([answerType, percentage]) => (
+            <li key={answerType} className="mb-2">
+              <div className="flex flex-col ">
+                <div className="flex justify-between mb-2">
+                  <span className="mr-2 text-[10px] ">{`${answerType}`}</span>
+                  <span className="text-[10px]">{`${percentage.toFixed(
+                    2
+                  )}%`}</span>
+                </div>
+                <div className={` rounded-lg bg-gray-200 `}>
+                  <div
+                    className={`h-3 rounded-full ${getAnswerColor(answerType)}`}
+                    style={{ width: `${percentage}%` }}
+                  ></div>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
       <ToastContainer />
     </div>

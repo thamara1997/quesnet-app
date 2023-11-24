@@ -18,6 +18,8 @@ const NavBar = () => {
   const handleShowDropDown = () => setShowDropdown((prev) => true);
   const handleHideDropDown = () => setShowDropdown((prev) => false);
 
+  // console.log(session?.user._id);
+
   const loggedIn = false;
   return (
     <div className="sticky flex justify-between p-[20px] px-10 items-center max-sm:w-full max-sm:px-5">
@@ -74,7 +76,7 @@ const NavBar = () => {
               <div className="absolute flex flex-col items-start gap-2 p-3 rounded-lg top-[80px] right-[40px] bg-white shadow-lg text-lg">
                 <div className="flex items-center justify-between gap-5 text-[15px]">
                   <Link
-                    href="/profile"
+                    href={`profile/${session.user.id}`}
                     onClick={handleHideDropDown}
                     className="px-3 hover:text-[#0a7685]"
                   >
