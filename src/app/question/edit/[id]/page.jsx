@@ -18,14 +18,23 @@ const EditQuestion = (ctx) => {
 
   const [question, setQuestion] = useState("");
   const [photo, setPhoto] = useState("");
-  const [category, setCategory] = useState("Computer Science");
-  const [quesType, setQuesType] = useState("Multiple Choices");
-  const [answer1, setAnswer1] = useState("Unsatisfied");
-  const [answer2, setAnswer2] = useState("Neutral");
-  const [answer3, setAnswer3] = useState("Satisfied");
-  const [answer4, setAnswer4] = useState("Very Satisfied");
+  const [category, setCategory] = useState("");
+  const [quesType, setQuesType] = useState("");
+  const [answer1, setAnswer1] = useState("");
+  const [answer2, setAnswer2] = useState("");
+  const [answer3, setAnswer3] = useState("");
+  const [answer4, setAnswer4] = useState("");
   const { data: session, status } = useSession();
   const router = useRouter();
+
+  useEffect(() => {
+    if (quesType === "Satisfactory") {
+      setAnswer1("Unsatisfied");
+      setAnswer2("Neutral");
+      setAnswer3("Satisfied");
+      setAnswer4("Very Satisfied");
+    }
+  }, [quesType]);
 
   useEffect(() => {
     async function fetchQuestion() {
@@ -44,7 +53,7 @@ const EditQuestion = (ctx) => {
       setAnswer4(question.answer4);
     }
     fetchQuestion();
-  }, []);
+  }, [ctx.params.id]);
 
   if (status === "loading") {
     return <p>Loading...</p>;
@@ -86,6 +95,8 @@ const EditQuestion = (ctx) => {
         answer4,
       };
 
+      console.log(body);
+
       if (imageUrl != null) {
         body.imageUrl = imageUrl;
       }
@@ -93,11 +104,12 @@ const EditQuestion = (ctx) => {
       const res = await fetch(
         `http://localhost:3000/api/question/${ctx.params.id}`,
         {
-          method: "PUT",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${session?.user?.accessToken}`,
           },
+          method: "PUT",
+
           body: JSON.stringify(body),
         }
       );
