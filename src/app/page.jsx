@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import QuestionCard from "@/components/questionCard/QuestionCard";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { isAuthenticated } from "../utils/auth";
 
 // import { questions } from "@/lib/data";
 
