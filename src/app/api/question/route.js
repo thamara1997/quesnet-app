@@ -37,3 +37,14 @@ export async function POST(req) {
     return new Response(JSON.stringify(null), { status: 500 });
   }
 }
+
+// export async function GET(req) {
+//   await db.connect();
+
+//   try {
+//     const questions = await Question.find({}).limit(16).populate("authorId");
+//     return new Response(JSON.stringify(questions), { status: 200 });
+//   } catch (error) {
+//     return new Response(JSON.stringify(null), { status: 500 });
+//   }
+// }

@@ -19,6 +19,7 @@ const NavBar = () => {
   const handleHideDropDown = () => setShowDropdown((prev) => false);
 
   // console.log(session?.user._id);
+  const userId = session?.user._id;
 
   const loggedIn = false;
   return (
@@ -76,7 +77,7 @@ const NavBar = () => {
               <div className="absolute flex flex-col items-start gap-2 p-3 rounded-lg top-[80px] right-[40px] bg-white shadow-lg text-lg">
                 <div className="flex items-center justify-between gap-5 text-[15px]">
                   <Link
-                    href={`profile/${session.user.id}`}
+                    href={`/user/${userId}`}
                     onClick={handleHideDropDown}
                     className="px-3 hover:text-[#0a7685]"
                   >

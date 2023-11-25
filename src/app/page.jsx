@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import QuestionCard from "@/components/questionCard/QuestionCard";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 // import { questions } from "@/lib/data";
 
@@ -12,6 +14,12 @@ export default function Home() {
     async function fetchQuestions() {
       try {
         const res = await fetch("http://localhost:3000/api/question", {
+          method: "GET", // You can change the method based on your API route
+          headers: {
+            // Include any custom headers if needed
+            "Content-Type": "application/json",
+            // Add more headers as needed
+          },
           cache: "no-store",
         });
         const questions = await res.json();
