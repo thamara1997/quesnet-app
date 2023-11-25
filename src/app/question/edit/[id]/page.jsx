@@ -199,6 +199,7 @@ const EditQuestion = (ctx) => {
                       setQuesType(e.target.value);
                     }}
                     className="p-3 bg-white rounded-full shadow-xl text-[#0fbbd3] w-full text-center"
+                    disabled
                   >
                     <option value="Multiple Choices">Multiple Choices</option>
                     <option value="Satisfactory">Satisfactory</option>
